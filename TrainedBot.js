@@ -13,6 +13,9 @@ import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import { connect } from "react-redux";
+import { TrainedDataActionType } from "../action-types/trained-data.actiontype";
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -44,13 +47,13 @@ const useStyles = makeStyles((theme) => ({
     },
     heading1 :{
       position:"relative",
-      top: 240,
+      top: 220,
       left: -90,
       fontFamily: "Segoe UI"
     },
     line1 :{
       position:"relative",
-      top: 180,
+      top: 220,
       width: 900,
       left: 180,
       height: 2,
@@ -59,15 +62,15 @@ const useStyles = makeStyles((theme) => ({
 
     heading3 :{
         position:"relative",
-        top: 340,
-        left: 140,
+        top: 100,
+        left: 135,
         fontFamily: "Segoe UI"
       },
       line3 :{
         position:"relative",
-        top: 345,
+        top: 105,
         width: 900,
-        left: 180,
+        left: 170,
         height: 2,
         backgroundColor:"black"
       },
@@ -177,20 +180,15 @@ const CSSTextField = withStyles({
     },
   })(Button);
   
-  export default function NativeSelects() {
+  function InputTextField() {
     const classes = useStyles();
-    const [state, setState] = React.useState({
-      age: '',
-      name: 'hai',
-    });
+    const handleChange = (event,props) => {
+        props.dispatch({type:TrainedDataActionType.SET_BOT_QUERY, query:event.target.value});
+        props.dispatch({type:TrainedDataActionType.SET_BOT_INTENT, botIntent:event.target.value});
+        props.dispatch({type:TrainedDataActionType.SET_BOT_SCENARIO, botScenario:event.target.value});
   
-    const handleChange = (event) => {
-      const name = event.target.name;
-      setState({
-        ...state,
-        [name]: event.target.value,
-      });
-    };
+      };
+    
 
     return (
         <div className="forms">
@@ -205,15 +203,16 @@ const CSSTextField = withStyles({
         <FormControl variant="outlined" className={classes.formControl}>
             <div className= "ManageBot">
             
-            <div className= "field"> 
-            <p><div className = "field1">
+            <div className= "field" style={{ position: "relative", left:2, top:20}}> 
+            <p><div className = "field1" >
              Enter User Query Text: 
                 </div> 
                 </p>
-                <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-60}}
+                <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-60} }
                     id="filled-secondary"
                     variant="filled"
                     color="secondary"
+                    onChange={handleChange}
                   /> </div>
               </div>
             
@@ -223,44 +222,39 @@ const CSSTextField = withStyles({
     
                 <Divider className={classes.line3}/>
             
-                <div className= "field">  
+                <div className= "field" style={{ position: "relative", left:2, top:170}}>  
                 
                 <p> <div className="field1" style={{ position: "relative", left:2, top:-50}} >Select Bot Intent:  </div> </p>
                 <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-105}}
                     id="filled-secondary"
                     variant="filled"
                     color="secondary"
+                    onChange={handleChange}
                   /> </div>
                 
                 
                 </div>
                 
             <form className={classes.root} noValidate autoComplete="off">
-                <div className= "field"> 
+                <div className= "field" style={{ position: "relative", left:1, top:170}}> 
                 
                 <p> <div className="field1" style={{ position: "relative", left:5, top:-50}}> Select Scenario:  </div> </p>
                 <div className="block"> <CSSTextField style={{height: 30, position: "relative", left:2, top:-90}}
                     id="filled-secondary"
                     variant="filled"
                     color="secondary"
+                    onChange={handleChange}
                   />
                    </div>
                 </div>
             </form>
-            
-            
-            
-
-
-            
-
-            
+           
             <br />
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:530, top:170}}>
                 Generate
             </BootstrapButton>
             &emsp; &emsp;
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:530, top:170}}>
                 Toggle View
             </BootstrapButton>
             <br />
@@ -271,7 +265,7 @@ const CSSTextField = withStyles({
         
             <Divider className={classes.line1}/>
 
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:380, top:250}}>
                 Map
             </BootstrapButton>
             <br /> <br /> <br /> <br /> <br />
@@ -285,3 +279,14 @@ const CSSTextField = withStyles({
         </div>
     );
   }
+
+  function mapStatetoProps(state){
+    return{
+    query: state.trainedbot.query,
+    botIntent: state.trainedbot.botIntent,
+    botScenario: state.trainedbot.botScenario
+    };
+  }
+  
+  
+  export default connect(mapStatetoProps)(InputTextField);
