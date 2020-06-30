@@ -13,9 +13,10 @@ import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Airtel from '/Users/jahanavimishra/features/src/components/Airtel.png';
-import User from '/Users/jahanavimishra/features/src/components/User.png';
-
+import Airtel from './Airtel.png';
+import User from './User.png';
+import { connect } from "react-redux";
+import { LoginActionType } from "../action-types/login.actiontype";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -166,13 +167,14 @@ const CSSTextField = withStyles({
     },
   })(Button);
 
-export default function SimpleSelect() {
+  function InputTextField() {
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const handleChange = (event,props) => {
+        props.dispatch({type:LoginActionType.SET_USER, user:event.target.value});
+        props.dispatch({type:LoginActionType.SET_PASSWORD, password:event.target.value});
   
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
+      };
+    
 
     return (
         
@@ -189,12 +191,14 @@ BOT MANAGER        </Typography >
             <CSSTextField
                 type='text'
                 placeholder='UserName'
+                onChange={handleChange}
                 />
                 <br /> <br / >
 
             <CSSTextField
                 type='password'
                 placeholder='Password'
+                onChange={handleChange}
                 />
             </div>
             <div className="check">
@@ -213,5 +217,12 @@ BOT MANAGER        </Typography >
 
 
 
-
-
+function mapStatetoProps(state){
+    return{
+    user: state.login.user,
+    password: state.login.password,
+    };
+  }
+  
+  
+  export default connect(mapStatetoProps)(InputTextField);
