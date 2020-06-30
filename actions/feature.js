@@ -1,0 +1,1 @@
+export const SEARCH_HOMEPAGE = 'SEARCH_HOMEPAGE';

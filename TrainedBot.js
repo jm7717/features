@@ -13,8 +13,6 @@ import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import { BotManagerActionType } from "../action-types/bot-manager.actiontype";
-
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -45,19 +43,34 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor:"black"
     },
     heading1 :{
-      position:"absolute",
-      top: 690,
-      left: 20,
+      position:"relative",
+      top: 240,
+      left: -90,
       fontFamily: "Segoe UI"
     },
     line1 :{
       position:"relative",
-      top: 120,
+      top: 180,
       width: 900,
       left: 180,
       height: 2,
       backgroundColor:"black"
     },
+
+    heading3 :{
+        position:"relative",
+        top: 340,
+        left: 140,
+        fontFamily: "Segoe UI"
+      },
+      line3 :{
+        position:"relative",
+        top: 345,
+        width: 900,
+        left: 180,
+        height: 2,
+        backgroundColor:"black"
+      },
     field1 :{
       position:"relative",
       top: 1880,
@@ -166,22 +179,23 @@ const CSSTextField = withStyles({
   
   export default function NativeSelects() {
     const classes = useStyles();
-    
+    const [state, setState] = React.useState({
+      age: '',
+      name: 'hai',
+    });
   
-    const handleChange = (event,props) => {
-      props.dispatch({type:BotManagerActionType.SET_BOT_NAME, botName:event.target.value});
-      props.dispatch({type:BotManagerActionType.SET_BOT_TOKEN, botToken:event.target.value});
-      props.dispatch({type:BotManagerActionType.SET_BOT_STRATEGY, botStrategy:event.target.value});
-      props.dispatch({type:BotManagerActionType.SET_BOT_ALGORITHM, botAlgorithm:event.target.value});
-      props.dispatch({type:BotManagerActionType.SET_BOT_MSISDN, botMsisdn:event.target.value});
-      props.dispatch({type:BotManagerActionType.SET_BOT_SCORE, botScore:event.target.value});
-
+    const handleChange = (event) => {
+      const name = event.target.name;
+      setState({
+        ...state,
+        [name]: event.target.value,
+      });
     };
 
     return (
         <div className="forms">
         <Typography variant="h3" className={classes.heading}>
-              Manage Bot
+              Check Bot Intent
             </Typography>
     
             <Divider className={classes.line}/>
@@ -191,14 +205,28 @@ const CSSTextField = withStyles({
         <FormControl variant="outlined" className={classes.formControl}>
             <div className= "ManageBot">
             
+            <div className= "field"> 
+            <p><div className = "field1">
+             Enter User Query Text: 
+                </div> 
+                </p>
+                <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-60}}
+                    id="filled-secondary"
+                    variant="filled"
+                    color="secondary"
+                  /> </div>
+              </div>
             
-              
-            
+              <Typography variant="h3" className={classes.heading3}>
+                Map Intent to Scenario
+                </Typography>
+    
+                <Divider className={classes.line3}/>
             
                 <div className= "field">  
                 
-                <p> <div className="field1" style={{ position: "relative", left:2, top:-10 }} >Enter Bot Name:  </div> </p>
-                <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-60}}
+                <p> <div className="field1" style={{ position: "relative", left:2, top:-50}} >Select Bot Intent:  </div> </p>
+                <div className="block"><CSSTextField style={{height: 30, position: "relative", left:2, top:-105}}
                     id="filled-secondary"
                     variant="filled"
                     color="secondary"
@@ -210,8 +238,8 @@ const CSSTextField = withStyles({
             <form className={classes.root} noValidate autoComplete="off">
                 <div className= "field"> 
                 
-                <p> <div className="field1" style={{ position: "relative", left:5, top:-10}}> Enter Bot Access Token:  </div> </p>
-                <div className="block"> <CSSTextField style={{height: 30, position: "relative", left:2, top:-50}}
+                <p> <div className="field1" style={{ position: "relative", left:5, top:-50}}> Select Scenario:  </div> </p>
+                <div className="block"> <CSSTextField style={{height: 30, position: "relative", left:2, top:-90}}
                     id="filled-secondary"
                     variant="filled"
                     color="secondary"
@@ -220,77 +248,7 @@ const CSSTextField = withStyles({
                 </div>
             </form>
             
-            <p><div className="field1" style={{ position: "relative", left:25, top:20}}> Enter Bot Strategy: </div></p>
-        <InputLabel htmlFor="filled-age-native-simple"></InputLabel>
-            <Select style={{width:205, height: 50, position: "relative", left:327, top:-5}}
-              native
-              onChange={handleChange}
-              inputProps={{
-                name: 'strategy',
-                id: 'filled-strategy-native-simple',
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={1}>Default</option>
-              <option value={2}>External</option>
-              <option value={3}>Native</option>
-              <option value={4}>Graph</option>
-            </Select>
-              </div>
             
-              <p><div className= "field1" style={{ position: "relative", left:27, top:20}}> Enter Bot Algorithm Location: 
-              </div></p>
-              <div className="block"> 
-
-              <InputLabel htmlFor="filled-age-native-simple"></InputLabel>
-              <Select style={{width:205, height: 50, position: "relative", left:247, top:-5}}
-                native
-                onChange={handleChange}
-                inputProps={{
-                  name: 'lob',
-                  id: 'filled-lob-native-simple',
-                }}
-              >
-                <option aria-label="None" value="" />
-                <option value={1}>PostPaid</option>
-                <option value={2}>PrePaid</option>
-                <option value={3}>DTH</option>
-                <option value={4}>Telemedia</option>
-                <option value={5}>HR</option>
-                <option value={6}>PaymentsBank</option>
-              </Select>
-              </div>
-              <p> <div className="field1" style={{ position: "relative", left:30, top:20}}> Bot MSISDN Log:  </div> </p>
-              <div className="block"> 
-                    <InputLabel htmlFor="filled-age-native-simple"></InputLabel>
-                    <Select style={{width:205, height: 50, position: "relative", left:250, top:-10}}
-                      native
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'msisdn',
-                        id: 'filled-msisdn-native-simple',
-                      }}
-                    >
-                      <option aria-label="None" value="" />
-                      <option value={1}>True</option>
-                      <option value={2}>False</option>
-                    </Select>
-                    
-
-                      <p> <div className = "field1" style={{ position: "relative", left:-130, top:20}} >Enter Bot Classify Score: </div></p>
-                        <InputLabel id="demo-customized-select-label">   </InputLabel><div className= "field"> 
-                        
-                      <div className="block"> 
-                      
-                          <CSSTextField style={{width:205, height: 50, position: "relative", left:5, top:-40}}
-                          id="filled-secondary"
-                          variant="filled"
-                          color="secondary"
-                        />
-                                  </div>
-
-                              
-                              </div>
             
 
 
@@ -298,32 +256,29 @@ const CSSTextField = withStyles({
 
             
             <br />
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:30}}>
-                Save
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+                Generate
             </BootstrapButton>
             &emsp; &emsp;
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:30}}>
-                Load
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+                Toggle View
             </BootstrapButton>
             <br />
             <div className= "DeleteBot">
             <Typography variant="h3" className={classes.heading1}>
-              Delete Bot
+              Trained Data View
             </Typography>
         
             <Divider className={classes.line1}/>
-            <br /> <br /> <br /> <br /> <br />
-            <div className= "field1">  
-            
-                <br /> <br />
-                
 
-            </div>
+            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:520, top:10}}>
+                Map
+            </BootstrapButton>
+            <br /> <br /> <br /> <br /> <br />
+            
             <br/>
             <br />
-            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.margin} style={{position: "relative", left:350, top:20}}>
-                Delete Scenario
-            </BootstrapButton>
+            
             </div>
             </div>
       </FormControl>
