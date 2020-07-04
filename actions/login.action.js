@@ -1,17 +1,16 @@
 import {LoginActionType} from "../action-types/login.actiontype";
 
-export function inputUser(event){
+export function inputUser(userIn){
     return {type:LoginActionType.SET_QUERY,
-            user: event.target.value
+            user: userIn
     };
 }
 
-export function inputPassword(event){
+export function inputPassword(passwordIn){
     return {type:LoginActionType.SET_BOT_INTENT,
-            password: event.target.value
+            password: passwordIn
     };
 }
 
 
 
-}

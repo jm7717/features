@@ -1,22 +1,21 @@
 import {TrainedDataActionType} from "../action-types/trained-data.actiontype";
 
-export function inputQuery(event){
+export function inputQuery(queryIn){
     return {type:TrainedDataActionType.SET_QUERY,
-            query: event.target.value
+            query: queryIn
     };
 }
 
-export function inputBotIntent(event){
+export function inputBotIntent(intIn){
     return {type:TrainedDataActionType.SET_BOT_INTENT,
-            botIntent: event.target.value
+            botIntent: intIn
     };
 }
 
-export function inputBotScenario(event){
+export function inputBotScenario(scIn){
     return {type: TrainedDataActionType.SET_BOT_SCENARIO,
-            botScenario: event.target.value
+            botScenario: scIn
     };
 }
 
 
-}
